@@ -9,6 +9,7 @@ import UniversalGates from './modules/Logic/UniversalGates';
 import Adders from './modules/Logic/Adders';
 import EncoderDecoder from './modules/Logic/EncoderDecoder';
 import { track } from './analytics';
+import ExpressionBuilder from './modules/Logic/ExpressionBuilder';
 
 const MODULES = [
   {
@@ -24,6 +25,7 @@ const MODULES = [
     key: 'logic', name: 'Logic Gates', ready: true,
     tabs: [
       { key: 'gates', topic: 'Gates', render: () => <LogicGates /> },
+      { key: 'expression', topic: 'Expression Builder', render: () => <ExpressionBuilder /> },
       { key: 'universal', topic: 'Universal Gates', render: () => <UniversalGates /> },
       { key: 'adders', topic: 'Adders', render: () => <Adders /> },
       { key: 'encdec', topic: 'Encoder & Decoder', render: () => <EncoderDecoder /> },
@@ -74,9 +76,8 @@ export default function App() {
                 key={m.key}
                 onClick={() => selectModule(m)}
                 aria-current={m.key === moduleKey ? 'page' : undefined}
-                className={`min-h-[40px] rounded-full border px-4 text-sm font-medium transition-colors ${
-                  m.key === moduleKey ? 'border-signal bg-signal text-white' : 'border-line bg-white text-ink'
-                }`}
+                className={`min-h-[40px] rounded-full border px-4 text-sm font-medium transition-colors ${m.key === moduleKey ? 'border-signal bg-signal text-white' : 'border-line bg-white text-ink'
+                  }`}
               >
                 {t(`nav.${m.key}`)}
               </button>
@@ -102,9 +103,8 @@ export default function App() {
               role="tab"
               aria-selected={tabKey === x.key}
               onClick={() => setTabKey(x.key)}
-              className={`-mb-px min-h-[44px] border-b-2 text-base font-medium transition-colors ${
-                tabKey === x.key ? 'border-signal text-ink' : 'border-transparent text-ink/60 hover:text-ink'
-              }`}
+              className={`-mb-px min-h-[44px] border-b-2 text-base font-medium transition-colors ${tabKey === x.key ? 'border-signal text-ink' : 'border-transparent text-ink/60 hover:text-ink'
+                }`}
             >
               {t(`tabs.${x.key}`)}
             </button>

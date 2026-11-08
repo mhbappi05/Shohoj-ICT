@@ -19,7 +19,8 @@
     "gates": "Logic gates",
     "universal": "Universal gates",
     "adders": "Adders",
-    "encdec": "Encoder & decoder"
+    "encdec": "Encoder & decoder",
+    "expression": "Expression builder"
   },
   "converter": {
     "title": "Number system converter",
@@ -129,6 +130,38 @@
       "noInput": "No input line is on, so the output is {{bits}}.",
       "outputLine": "Output line",
       "activeInput": "Active input"
+    },
+    "expr": {
+      "label": "Boolean expression",
+      "keysHint": "Use the keys below, or type on your keyboard.",
+      "examples": "Try an example",
+      "readAs": "Read as",
+      "merge": "Use NAND / NOR / XNOR when an expression ends in NOT",
+      "swipe": "Swipe sideways to see the whole circuit.",
+      "result": "With {{inputs}}: Y = {{y}}",
+      "noInputs": "This expression has no variables, so Y is always the same.",
+      "steps": "Step-by-step calculation",
+      "chainNote": "Every gate has two inputs, so A·B·C is drawn as two AND gates.",
+      "delete": "Delete",
+      "clear": "Clear",
+      "syntax": {
+        "title": "Symbols you can use",
+        "and": "AND: · . * & or write letters side by side (AB)",
+        "or": "OR: + or |",
+        "not": "NOT: ′ after a term (A′), or ! / ~ before it",
+        "xor": "XOR: ⊕ or ^",
+        "brackets": "Brackets: ( )",
+        "consts": "Constants: 0 and 1",
+        "rules": "Up to 4 variables (A to Z). Order of work: NOT, then AND, then XOR, then OR."
+      },
+      "errors": {
+        "empty": "Type an expression, for example A·B + C′.",
+        "unexpected": "Unexpected “{{ch}}” at position {{pos}}.",
+        "paren": "The brackets don't match. Check that every ( has a ).",
+        "missing": "The expression ends too early. Something is missing after position {{pos}}.",
+        "tooMany": "Use at most 4 different variables (A to Z).",
+        "unknown": "Could not read this expression."
+      }
     }
   }
 }
