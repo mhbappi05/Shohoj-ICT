@@ -1,0 +1,134 @@
+{
+  "app": {
+    "title": "Shohoj ICT",
+    "tagline": "See how HSC ICT actually works."
+  },
+  "nav": {
+    "numbers": "Number systems",
+    "logic": "Logic gates & circuits",
+    "web": "Web design",
+    "programming": "Programming",
+    "databases": "Databases",
+    "soon": "Coming soon"
+  },
+  "tabs": {
+    "converter": "Base converter",
+    "add": "Binary addition",
+    "sub": "Binary subtraction",
+    "twos": "2's complement",
+    "gates": "Logic gates",
+    "universal": "Universal gates",
+    "adders": "Adders",
+    "encdec": "Encoder & decoder"
+  },
+  "converter": {
+    "title": "Number system converter",
+    "value": "Value",
+    "from": "From",
+    "to": "To",
+    "base2": "Binary (2)",
+    "base8": "Octal (8)",
+    "base10": "Decimal (10)",
+    "base16": "Hexadecimal (16)",
+    "result": "Result",
+    "invalid": "Use only digits that exist in base {{base}}.",
+    "positional": "Positional weights",
+    "digit": "Digit",
+    "weight": "Weight",
+    "product": "Digit × weight",
+    "sum": "Sum (decimal)",
+    "division": "Repeated division by {{base}}",
+    "dividend": "Number",
+    "quotient": "Quotient",
+    "remainder": "Remainder",
+    "readUp": "Read the remainders from bottom to top."
+  },
+  "twos": {
+    "title": "2's complement",
+    "value": "Decimal number",
+    "bits": "Bit width",
+    "outOfRange": "{{bits}}-bit numbers hold {{min}} to {{max}}.",
+    "notInteger": "Enter a whole number, like -45.",
+    "step1": "Write the binary form",
+    "step1Neg": "Write the binary form of {{n}} (ignore the minus sign).",
+    "step1Pos": "{{n}} is positive, so its 2's complement is the same as its binary form.",
+    "step2": "Flip every bit",
+    "step2Body": "Change each 0 to 1 and each 1 to 0. This is the 1's complement. Flipped bits are highlighted.",
+    "step3": "Add 1",
+    "step3Body": "Add 1 to the 1's complement. A carry moves left until it meets a 0.",
+    "check": "Check: the leftmost bit counts as −{{w}}, the others add up normally.",
+    "back": "Back",
+    "next": "Next",
+    "play": "Play",
+    "pause": "Pause",
+    "reset": "Reset"
+  },
+  "arith": {
+    "a": "First number (A)",
+    "b": "Second number (B)",
+    "addIntro": "Add column by column from the right. 1 + 1 = 10, so write 0 and carry 1.",
+    "subIntro": "To compute A − B, find the 2's complement of B (that is −B), then add it to A.",
+    "makeNeg": "Make −B",
+    "flipB": "Flip every bit of B.",
+    "negB": "Add 1 to the flipped bits. The result is −B.",
+    "sumAdd": "Add A and B",
+    "sumSub": "Add A and −B",
+    "rowFlip": "Flipped",
+    "rowResult": "Result",
+    "showAll": "Show all",
+    "column": "{{a}} + {{b}} + carry {{c}} = {{total}}: write {{bit}}, carry {{carry}}",
+    "carryOut": "The carry out of the leftmost column ({{c}}) is discarded.",
+    "overflow": "Overflow: the true answer {{value}} does not fit in {{bits}} bits, so these bits show a wrong number.",
+    "noOverflow": "No overflow: the answer fits in {{bits}} bits.",
+    "toggleSign": "Switch between positive and negative"
+  },
+  "logic": {
+    "circuitLabel": "Logic circuit. Green wires carry 1, grey wires carry 0.",
+    "tapHint": "Tap an input to switch it between 0 and 1.",
+    "truthTable": "Truth table",
+    "desc": {
+      "AND": "Output is 1 only when every input is 1.",
+      "OR": "Output is 1 when at least one input is 1.",
+      "NOT": "Output is the opposite of the input.",
+      "NAND": "AND followed by NOT. Output is 0 only when every input is 1.",
+      "NOR": "OR followed by NOT. Output is 1 only when every input is 0.",
+      "XOR": "Output is 1 when the two inputs are different.",
+      "XNOR": "Output is 1 when the two inputs are the same."
+    },
+    "universal": {
+      "intro": "NAND and NOR are universal gates: every other gate can be built from just one of them.",
+      "base": "Build with",
+      "target": "Build a",
+      "matches": "On every row, this circuit gives the same output as a real {{gate}} gate.",
+      "how": {
+        "NAND_NOT": "Join both inputs of a NAND together. It now just inverts the signal.",
+        "NAND_AND": "A NAND gives NOT-AND. A second NAND wired as a NOT flips it back to AND.",
+        "NAND_OR": "Invert A and B with two NANDs wired as NOTs, then NAND the results. By De Morgan's law this gives A OR B.",
+        "NOR_NOT": "Join both inputs of a NOR together. It now just inverts the signal.",
+        "NOR_OR": "A NOR gives NOT-OR. A second NOR wired as a NOT flips it back to OR.",
+        "NOR_AND": "Invert A and B with two NORs wired as NOTs, then NOR the results. By De Morgan's law this gives A AND B."
+      }
+    },
+    "adders": {
+      "half": "Half adder",
+      "full": "Full adder",
+      "halfNote": "Sum = A XOR B. Carry = A AND B.",
+      "fullNote": "Sum = A XOR B XOR Cin. Cout = A·B + Cin·(A XOR B).",
+      "halfTotal": "{{a}} + {{b}} = {{value}} in binary, so Sum is {{sum}} and Carry is {{carry}}.",
+      "fullTotal": "{{a}} + {{b}} + {{c}} = {{value}} in binary, so Sum is {{sum}} and Cout is {{carry}}."
+    },
+    "encdec": {
+      "decoder2": "Decoder 2→4",
+      "decoder3": "Decoder 3→8",
+      "encoder4": "Encoder 4→2",
+      "encoder8": "Encoder 8→3",
+      "decoderHint": "Tap the input bits. Exactly one output line turns on.",
+      "encoderHint": "Tap one input line. The outputs show its number in binary.",
+      "decoderResult": "Input {{bits}} is {{n}}, so output D{{n}} is on.",
+      "encoderResult": "Input I{{n}} is on, so the output is {{bits}}.",
+      "noInput": "No input line is on, so the output is {{bits}}.",
+      "outputLine": "Output line",
+      "activeInput": "Active input"
+    }
+  }
+}
