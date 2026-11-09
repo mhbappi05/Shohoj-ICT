@@ -101,6 +101,8 @@
       "base": "Build with",
       "target": "Build a",
       "matches": "On every row, this circuit gives the same output as a real {{gate}} gate.",
+      "modeBasic": "Basic gates",
+      "modeEquation": "Build from an equation",
       "how": {
         "NAND_NOT": "Join both inputs of a NAND together. It now just inverts the signal.",
         "NAND_AND": "A NAND gives NOT-AND. A second NAND wired as a NOT flips it back to AND.",
@@ -161,6 +163,45 @@
         "missing": "The expression ends too early. Something is missing after position {{pos}}.",
         "tooMany": "Use at most 4 different variables (A to Z).",
         "unknown": "Could not read this expression."
+      }
+    },
+    "simplify": {
+      "title": "Simplify using Boolean laws",
+      "given": "Given",
+      "already": "Already in its simplest form. No law makes it shorter.",
+      "final": "Simplified",
+      "saved": "Literals: {{from}} → {{to}}",
+      "viewSimplified": "Simplified",
+      "viewOriginal": "Original"
+    },
+    "laws": {
+      "doubleNeg": "Double negation law",
+      "constNot": "Complement of a constant",
+      "deMorgan": "De Morgan's law",
+      "identity": "Identity law",
+      "null": "Null law",
+      "idempotent": "Idempotent law",
+      "complement": "Complement law",
+      "absorption": "Absorption law",
+      "redundancy": "Redundancy law",
+      "distributive": "Distributive law",
+      "combining": "Combining (adjacency) law",
+      "consensus": "Consensus theorem",
+      "xor": "XOR law",
+      "kmap": "Group the 1s in the truth table (Karnaugh map / Quine–McCluskey) to get the minimal sum of products",
+      "kmapPos": "Group the 0s in the truth table (Karnaugh map / Quine–McCluskey) to get the minimal product of sums"
+    },
+    "uni": {
+      "use": "Use only",
+      "form": "Form used",
+      "formSop": "The sum-of-products form needs fewer {{base}} gates here.",
+      "formPos": "The product-of-sums form needs fewer {{base}} gates here.",
+      "count": "{{n}} {{base}} gates",
+      "without": "Without simplifying it would need {{n}} gates.",
+      "noGates": "No gates needed: the output is just an input or a constant.",
+      "how": {
+        "NAND": "Every AND, OR, NOT and XOR is rebuilt from NAND gates. A sum of products becomes NAND–NAND: NAND each product, then NAND the results. A NAND with both inputs joined makes a NOT.",
+        "NOR": "Every AND, OR, NOT and XOR is rebuilt from NOR gates. A product of sums becomes NOR–NOR: NOR each sum, then NOR the results. A NOR with both inputs joined makes a NOT."
       }
     }
   }

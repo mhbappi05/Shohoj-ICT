@@ -6,9 +6,10 @@ import Segmented from '../../components/Segmented';
 import TruthTable from '../../components/TruthTable';
 import { buildTable, activeRow, gateEval } from '../../lib/logic';
 import { universal } from '../../lib/circuits';
+import UniversalFromEquation from './UniversalFromEquation';
 import { track } from '../../analytics';
 
-export default function UniversalGates() {
+function BasicGates() {
   const { t } = useTranslation();
   const [base, setBase] = useState('NAND');
   const [target, setTarget] = useState('AND');
@@ -63,5 +64,30 @@ export default function UniversalGates() {
         {matches && <p className="mt-3 text-sm text-signal">{t('logic.universal.matches', { gate: target })}</p>}
       </div>
     </section>
+  );
+}
+
+export default function UniversalGates() {
+  const { t } = useTranslation();
+  const [mode, setMode] = useState('basic');
+
+  const pick = (m) => {
+    setMode(m);
+    track('module_opened', { module_name: 'Logic Gates', topic: `Universal mode: ${m}` });
+  };
+
+  return (
+    <div className="space-y-4">
+      <Segmented
+        options={[
+          { value: 'basic', label: t('logic.universal.modeBasic') },
+          { value: 'equation', label: t('logic.universal.modeEquation') },
+        ]}
+        value={mode}
+        onChange={pick}
+        label="Mode"
+      />
+      {mode === 'basic' ? <BasicGates /> : <UniversalFromEquation />}
+    </div>
   );
 }

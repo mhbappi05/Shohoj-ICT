@@ -106,7 +106,7 @@ export function collectVars(ast) {
 
 const PREC = { or: 1, xor: 2, and: 3 };
 
-/** Readable form of an AST, e.g. A·B + C′ */
+/** Readable form of a (binary) AST, e.g. A·B + C′ */
 export function pp(n) {
   if (n.t === 'var') return n.n;
   if (n.t === 'const') return String(n.v);
@@ -120,7 +120,8 @@ export function pp(n) {
   return wrap(n.a) + sym + wrap(n.b);
 }
 
-const canon = (n) =>
+/** Canonical key, used to share identical sub-expressions. */
+export const canon = (n) =>
   n.t === 'var' ? n.n
   : n.t === 'const' ? `#${n.v}`
   : n.t === 'not' ? `!${canon(n.a)}`
@@ -132,40 +133,14 @@ const NEG_TYPE = { and: 'NAND', or: 'NOR', xor: 'XNOR' };
 const IN_X = 24, R = 12, GW = 68, FIRST = 88, COL = 100, ROW = 64;
 
 /**
- * Turn an AST into a drawable netlist. Identical sub-expressions share one gate.
- * With merge=true, NOT applied to AND/OR/XOR becomes one NAND/NOR/XNOR gate.
+ * Lay out a netlist { inputs, gates, rootId } into a drawable circuit.
+ * Gates must be listed in creation order (a gate's inputs come before it).
  */
-export function circuitFromAst(ast, { merge = true } = {}) {
-  const vars = collectVars(ast);
+export function layoutNetlist({ inputs, gates, rootId }) {
   const level = {};
-  const gates = [];
-  const seen = new Map();
-  const consts = new Set();
-  vars.forEach((v) => { level[v] = 0; });
+  inputs.forEach((i) => { level[i.id] = 0; });
+  gates.forEach((g) => { level[g.id] = 1 + Math.max(...g.in.map((x) => level[x])); });
 
-  function build(n) {
-    if (n.t === 'var') return n.n;
-    if (n.t === 'const') { const id = `K${n.v}`; consts.add(n.v); level[id] = 0; return id; }
-    const key = canon(n);
-    if (seen.has(key)) return seen.get(key);
-    let type, ins;
-    if (n.t === 'not') {
-      if (merge && n.a.t in NEG_TYPE) { type = NEG_TYPE[n.a.t]; ins = [build(n.a.a), build(n.a.b)]; }
-      else { type = 'NOT'; ins = [build(n.a)]; }
-    } else { type = BASE_TYPE[n.t]; ins = [build(n.a), build(n.b)]; }
-    const id = `g${gates.length + 1}`;
-    gates.push({ id, type, in: ins, expr: pp(n) });
-    level[id] = 1 + Math.max(...ins.map((x) => level[x]));
-    seen.set(key, id);
-    return id;
-  }
-  const rootId = build(ast);
-
-  // inputs
-  const inputs = [
-    ...vars.map((v) => ({ id: v, label: v })),
-    ...[...consts].sort().map((v) => ({ id: `K${v}`, label: String(v), fixed: v })),
-  ];
   const outY = {};
   inputs.forEach((it, i) => { it.x = IN_X; it.y = 28 + i * 52; outY[it.id] = it.y; });
 
@@ -218,4 +193,37 @@ export function circuitFromAst(ast, { merge = true } = {}) {
     lanes,
     outputs: [{ id: 'Y', label: 'Y', from: rootId, x: outX, y: outY[rootId], skip: false }],
   };
+}
+
+/**
+ * Turn a binary AST into a drawable circuit. Identical sub-expressions share one gate.
+ * With merge=true, NOT applied to AND/OR/XOR becomes one NAND/NOR/XNOR gate.
+ */
+export function circuitFromAst(ast, { merge = true } = {}) {
+  const vars = collectVars(ast);
+  const gates = [];
+  const seen = new Map();
+  const consts = new Set();
+
+  function build(n) {
+    if (n.t === 'var') return n.n;
+    if (n.t === 'const') { consts.add(n.v); return `K${n.v}`; }
+    const key = canon(n);
+    if (seen.has(key)) return seen.get(key);
+    let type, ins;
+    if (n.t === 'not') {
+      if (merge && n.a.t in NEG_TYPE) { type = NEG_TYPE[n.a.t]; ins = [build(n.a.a), build(n.a.b)]; }
+      else { type = 'NOT'; ins = [build(n.a)]; }
+    } else { type = BASE_TYPE[n.t]; ins = [build(n.a), build(n.b)]; }
+    const id = `g${gates.length + 1}`;
+    gates.push({ id, type, in: ins, expr: pp(n) });
+    seen.set(key, id);
+    return id;
+  }
+  const rootId = build(ast);
+  const inputs = [
+    ...vars.map((v) => ({ id: v, label: v })),
+    ...[...consts].sort().map((v) => ({ id: `K${v}`, label: String(v), fixed: v })),
+  ];
+  return layoutNetlist({ inputs, gates, rootId });
 }
