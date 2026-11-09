@@ -1,15 +1,28 @@
-import { useEffect, useState } from 'react';
+import { Suspense, lazy, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import LanguageToggle from './components/LanguageToggle';
 import Converter from './modules/NumberSystems/Converter';
 import BinaryArithmetic from './modules/NumberSystems/BinaryArithmetic';
 import TwosComplement from './modules/NumberSystems/TwosComplement';
 import LogicGates from './modules/Logic/LogicGates';
+import ExpressionBuilder from './modules/Logic/ExpressionBuilder';
 import UniversalGates from './modules/Logic/UniversalGates';
 import Adders from './modules/Logic/Adders';
 import EncoderDecoder from './modules/Logic/EncoderDecoder';
+import HtmlSandbox from './modules/Web/HtmlSandbox';
 import { track } from './analytics';
-import ExpressionBuilder from './modules/Logic/ExpressionBuilder';
+
+// sql.js and its WebAssembly file only download when the Databases chapter is opened
+const DatabaseModule = lazy(() => import('./modules/Database/DatabaseModule'));
+
+function Db({ tab }) {
+  const { t } = useTranslation();
+  return (
+    <Suspense fallback={<p className="p-4 text-sm text-ink/70">{t('db.loading')}</p>}>
+      <DatabaseModule tab={tab} />
+    </Suspense>
+  );
+}
 
 const MODULES = [
   {
@@ -31,9 +44,18 @@ const MODULES = [
       { key: 'encdec', topic: 'Encoder & Decoder', render: () => <EncoderDecoder /> },
     ],
   },
-  { key: 'web', ready: false },
+  {
+    key: 'web', name: 'Web Design', ready: true,
+    tabs: [{ key: 'html', topic: 'HTML Sandbox', render: () => <HtmlSandbox /> }],
+  },
   { key: 'programming', ready: false },
-  { key: 'databases', ready: false },
+  {
+    key: 'databases', name: 'Databases', ready: true,
+    tabs: [
+      { key: 'sql', topic: 'SQL Playground', render: () => <Db tab="sql" /> },
+      { key: 'schema', topic: 'Tables & Schema', render: () => <Db tab="schema" /> },
+    ],
+  },
 ];
 
 export default function App() {
@@ -76,8 +98,9 @@ export default function App() {
                 key={m.key}
                 onClick={() => selectModule(m)}
                 aria-current={m.key === moduleKey ? 'page' : undefined}
-                className={`min-h-[40px] rounded-full border px-4 text-sm font-medium transition-colors ${m.key === moduleKey ? 'border-signal bg-signal text-white' : 'border-line bg-white text-ink'
-                  }`}
+                className={`min-h-[40px] rounded-full border px-4 text-sm font-medium transition-colors ${
+                  m.key === moduleKey ? 'border-signal bg-signal text-white' : 'border-line bg-white text-ink'
+                }`}
               >
                 {t(`nav.${m.key}`)}
               </button>
@@ -103,8 +126,9 @@ export default function App() {
               role="tab"
               aria-selected={tabKey === x.key}
               onClick={() => setTabKey(x.key)}
-              className={`-mb-px min-h-[44px] border-b-2 text-base font-medium transition-colors ${tabKey === x.key ? 'border-signal text-ink' : 'border-transparent text-ink/60 hover:text-ink'
-                }`}
+              className={`-mb-px min-h-[44px] border-b-2 text-base font-medium transition-colors ${
+                tabKey === x.key ? 'border-signal text-ink' : 'border-transparent text-ink/60 hover:text-ink'
+              }`}
             >
               {t(`tabs.${x.key}`)}
             </button>

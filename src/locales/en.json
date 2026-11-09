@@ -20,7 +20,10 @@
     "universal": "Universal gates",
     "adders": "Adders",
     "encdec": "Encoder & decoder",
-    "expression": "Expression builder"
+    "expression": "Expression builder",
+    "html": "HTML sandbox",
+    "sql": "SQL playground",
+    "schema": "Tables & schema"
   },
   "converter": {
     "title": "Number system converter",
@@ -203,6 +206,132 @@
         "NAND": "Every AND, OR, NOT and XOR is rebuilt from NAND gates. A sum of products becomes NAND–NAND: NAND each product, then NAND the results. A NAND with both inputs joined makes a NOT.",
         "NOR": "Every AND, OR, NOT and XOR is rebuilt from NOR gates. A product of sums becomes NOR–NOR: NOR each sum, then NOR the results. A NOR with both inputs joined makes a NOT."
       }
+    }
+  },
+  "web": {
+    "panes": {
+      "code": "Code",
+      "preview": "Preview",
+      "tree": "DOM tree"
+    },
+    "codeLabel": "HTML code",
+    "symbolsTitle": "Symbols",
+    "tagsTitle": "Tags",
+    "snippetsTitle": "Snippets",
+    "seeResult": "See result",
+    "reset": "Reset sample",
+    "clear": "Clear",
+    "previewTitle": "Page preview",
+    "previewNote": "Updates as you type. Links and forms are switched off in the preview.",
+    "snip": {
+      "format": "Formatting",
+      "list": "Lists",
+      "link": "Link",
+      "image": "Image",
+      "table": "Table",
+      "form": "Form"
+    },
+    "tree": {
+      "title": "DOM tree",
+      "autoTags": "The browser adds <html>, <head> and <body> even if you leave them out.",
+      "expandAll": "Expand all",
+      "collapseAll": "Collapse all",
+      "attributes": "Attributes",
+      "none": "none",
+      "children": "Child nodes",
+      "path": "Path",
+      "tapHint": "Tap a node to see what it is.",
+      "truncated": "The page is large, so only the first part of the tree is shown."
+    },
+    "tag": {
+      "html": "The root of the page. Everything else sits inside it.",
+      "head": "Information about the page (title, styles). It is not shown on the page itself.",
+      "title": "The text shown on the browser tab.",
+      "meta": "Extra information about the page, such as the character set.",
+      "body": "Everything you can see on the page.",
+      "h": "A heading. h1 is the biggest and h6 the smallest.",
+      "p": "A paragraph of text.",
+      "br": "A line break.",
+      "hr": "A horizontal line.",
+      "b": "Bold text.",
+      "strong": "Important text, shown in bold.",
+      "i": "Italic text.",
+      "em": "Emphasised text, shown in italic.",
+      "u": "Underlined text.",
+      "a": "A hyperlink. The href attribute says where it goes.",
+      "img": "An image. src is the file; alt is the text shown if it can't load.",
+      "ul": "An unordered (bulleted) list.",
+      "ol": "An ordered (numbered) list.",
+      "li": "One item in a list.",
+      "table": "A table.",
+      "tr": "A row in a table.",
+      "th": "A heading cell in a table.",
+      "td": "A data cell in a table.",
+      "form": "A form that collects input from the user.",
+      "input": "A field where the user types or chooses something. The type attribute sets the kind.",
+      "label": "A caption for a form field.",
+      "button": "A clickable button.",
+      "select": "A drop-down list.",
+      "textarea": "A multi-line text box.",
+      "div": "A block-level box used to group content.",
+      "span": "An inline wrapper for part of a line of text.",
+      "sub": "Subscript text, like H₂O.",
+      "sup": "Superscript text, like x²."
+    }
+  },
+  "db": {
+    "loading": "Loading the database…",
+    "loadError": "The database could not start.",
+    "exampleTitle": "Try an example",
+    "ex": {
+      "all": "All rows",
+      "columns": "Pick columns",
+      "where": "WHERE",
+      "order": "ORDER BY",
+      "join": "JOIN",
+      "group": "GROUP BY",
+      "avg": "Average marks",
+      "update": "UPDATE",
+      "insert": "INSERT",
+      "delete": "DELETE"
+    },
+    "editorLabel": "SQL query",
+    "keywords": "Keywords",
+    "symbols": "Symbols",
+    "tablesCols": "Tables and columns",
+    "run": "Run query",
+    "reset": "Reset database",
+    "runHint": "Ctrl + Enter also runs the query.",
+    "resetNote": "Changes from UPDATE, INSERT and DELETE last until you reset or leave this page.",
+    "error": "SQL error",
+    "rowsChanged": "{{n}} row(s) changed.",
+    "done": "Done.",
+    "rowsReturned": "{{n}} row(s) returned",
+    "shown": "showing the first {{n}}",
+    "emptyResult": "No rows matched.",
+    "visual": {
+      "title": "What your query picks from {{table}}",
+      "hint": "Green columns are chosen by SELECT. Amber columns are used by WHERE. Faded rows are filtered out.",
+      "legendSelect": "SELECT column",
+      "legendWhere": "WHERE column",
+      "legendRow": "Row kept",
+      "joinNote": "This query joins tables, so it is shown only as a result table."
+    },
+    "stepsTitle": "How the database runs it",
+    "step": {
+      "from": "FROM: pick the table",
+      "where": "WHERE: keep the rows that match",
+      "groupBy": "GROUP BY: make groups of rows",
+      "having": "HAVING: keep the groups that match",
+      "select": "SELECT: choose the columns",
+      "orderBy": "ORDER BY: sort the rows",
+      "limit": "LIMIT: keep only the first rows"
+    },
+    "schema": {
+      "title": "Relational schema",
+      "legend": "PK = primary key: it identifies each row. FK = foreign key: it points to the primary key of another table.",
+      "arrowNote": "Arrows run from a foreign key to the primary key it refers to.",
+      "browse": "Browse a table"
     }
   }
 }
