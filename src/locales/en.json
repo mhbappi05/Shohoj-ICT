@@ -453,6 +453,7 @@
     "analytics": "Anonymous usage statistics help us improve the lessons.",
     "feedback": "Send feedback",
     "top": "Back to top",
-    "rights": "© {{year}} Shohoj ICT"
+    "rights": "© {{year}} Shohoj ICT",
+    "bitsNote": "“ICT” as a computer stores it (8-bit ASCII)"
   }
 }
