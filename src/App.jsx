@@ -11,6 +11,8 @@ import Adders from './modules/Logic/Adders';
 import EncoderDecoder from './modules/Logic/EncoderDecoder';
 import HtmlSandbox from './modules/Web/HtmlSandbox';
 import { track } from './analytics';
+import FlowchartRunner from './modules/Program/FlowchartRunner';
+import CVisualizer from './modules/Program/CVisualizer';
 
 // sql.js and its WebAssembly file only download when the Databases chapter is opened
 const DatabaseModule = lazy(() => import('./modules/Database/DatabaseModule'));
@@ -48,7 +50,13 @@ const MODULES = [
     key: 'web', name: 'Web Design', ready: true,
     tabs: [{ key: 'html', topic: 'HTML Sandbox', render: () => <HtmlSandbox /> }],
   },
-  { key: 'programming', ready: false },
+  {
+    key: 'programming', name: 'Programming', ready: true,
+    tabs: [
+      { key: 'flowchart', topic: 'Flowcharts', render: () => <FlowchartRunner /> },
+      { key: 'cvis', topic: 'C Code Visualizer', render: () => <CVisualizer /> },
+    ],
+  },
   {
     key: 'databases', name: 'Databases', ready: true,
     tabs: [
@@ -98,9 +106,8 @@ export default function App() {
                 key={m.key}
                 onClick={() => selectModule(m)}
                 aria-current={m.key === moduleKey ? 'page' : undefined}
-                className={`min-h-[40px] rounded-full border px-4 text-sm font-medium transition-colors ${
-                  m.key === moduleKey ? 'border-signal bg-signal text-white' : 'border-line bg-white text-ink'
-                }`}
+                className={`min-h-[40px] rounded-full border px-4 text-sm font-medium transition-colors ${m.key === moduleKey ? 'border-signal bg-signal text-white' : 'border-line bg-white text-ink'
+                  }`}
               >
                 {t(`nav.${m.key}`)}
               </button>
@@ -126,9 +133,8 @@ export default function App() {
               role="tab"
               aria-selected={tabKey === x.key}
               onClick={() => setTabKey(x.key)}
-              className={`-mb-px min-h-[44px] border-b-2 text-base font-medium transition-colors ${
-                tabKey === x.key ? 'border-signal text-ink' : 'border-transparent text-ink/60 hover:text-ink'
-              }`}
+              className={`-mb-px min-h-[44px] border-b-2 text-base font-medium transition-colors ${tabKey === x.key ? 'border-signal text-ink' : 'border-transparent text-ink/60 hover:text-ink'
+                }`}
             >
               {t(`tabs.${x.key}`)}
             </button>
