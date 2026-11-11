@@ -16,3 +16,5 @@ export function initAnalytics() {
 export function track(event, props = {}) {
   if (ready) posthog.capture(event, props);
 }
+
+export const analyticsEnabled = Boolean(key);

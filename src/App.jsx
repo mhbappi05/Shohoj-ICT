@@ -13,6 +13,7 @@ import HtmlSandbox from './modules/Web/HtmlSandbox';
 import { track } from './analytics';
 import FlowchartRunner from './modules/Program/FlowchartRunner';
 import CVisualizer from './modules/Program/CVisualizer';
+import Footer from './components/Footer';
 
 // sql.js and its WebAssembly file only download when the Databases chapter is opened
 const DatabaseModule = lazy(() => import('./modules/Database/DatabaseModule'));
@@ -89,78 +90,81 @@ export default function App() {
   }, [moduleKey, tabKey]);
 
   return (
-    <div className="mx-auto max-w-4xl px-4 pb-16">
-      <header className="flex items-center justify-between gap-3 py-4">
-        <div className="min-w-0">
-          <h1 className="text-xl font-bold sm:text-2xl">{t('app.title')}</h1>
-          <p className="text-sm text-ink/70">{t('app.tagline')}</p>
-        </div>
-        <LanguageToggle />
-      </header>
+    <div className="flex min-h-dvh flex-col">
+      <div className="mx-auto w-full max-w-4xl flex-1 px-4 pb-8">
+        <header className="flex items-center justify-between gap-3 py-4">
+          <div className="min-w-0">
+            <h1 className="text-xl font-bold sm:text-2xl">{t('app.title')}</h1>
+            <p className="text-sm text-ink/70">{t('app.tagline')}</p>
+          </div>
+          <LanguageToggle />
+        </header>
 
-      <nav className="no-scrollbar -mx-4 mb-4 overflow-x-auto px-4" aria-label="Chapters">
-        <div className="flex gap-2 whitespace-nowrap">
-          {MODULES.map((m) =>
-            m.ready ? (
+        <nav className="no-scrollbar -mx-4 mb-4 overflow-x-auto px-4" aria-label="Chapters">
+          <div className="flex gap-2 whitespace-nowrap">
+            {MODULES.map((m) =>
+              m.ready ? (
+                <button
+                  key={m.key}
+                  onClick={() => selectModule(m)}
+                  aria-current={m.key === moduleKey ? 'page' : undefined}
+                  className={`min-h-[40px] rounded-full border px-4 text-sm font-medium transition-colors ${m.key === moduleKey ? 'border-signal bg-signal text-white' : 'border-line bg-white text-ink'
+                    }`}
+                >
+                  {t(`nav.${m.key}`)}
+                </button>
+              ) : (
+                <span
+                  key={m.key}
+                  title={t('nav.soon')}
+                  aria-disabled="true"
+                  className="flex min-h-[40px] items-center rounded-full border border-line bg-white/70 px-4 text-sm text-ink/50"
+                >
+                  {t(`nav.${m.key}`)}
+                </span>
+              )
+            )}
+          </div>
+        </nav>
+
+        <div className="no-scrollbar -mx-4 mb-4 overflow-x-auto px-4">
+          <div className="flex gap-5 whitespace-nowrap border-b border-line" role="tablist">
+            {mod.tabs.map((x) => (
               <button
-                key={m.key}
-                onClick={() => selectModule(m)}
-                aria-current={m.key === moduleKey ? 'page' : undefined}
-                className={`min-h-[40px] rounded-full border px-4 text-sm font-medium transition-colors ${m.key === moduleKey ? 'border-signal bg-signal text-white' : 'border-line bg-white text-ink'
+                key={x.key}
+                role="tab"
+                aria-selected={tabKey === x.key}
+                onClick={() => setTabKey(x.key)}
+                className={`-mb-px min-h-[44px] border-b-2 text-base font-medium transition-colors ${tabKey === x.key ? 'border-signal text-ink' : 'border-transparent text-ink/60 hover:text-ink'
                   }`}
               >
-                {t(`nav.${m.key}`)}
-              </button>
-            ) : (
-              <span
-                key={m.key}
-                title={t('nav.soon')}
-                aria-disabled="true"
-                className="flex min-h-[40px] items-center rounded-full border border-line bg-white/70 px-4 text-sm text-ink/50"
-              >
-                {t(`nav.${m.key}`)}
-              </span>
-            )
-          )}
-        </div>
-      </nav>
-
-      <div className="no-scrollbar -mx-4 mb-4 overflow-x-auto px-4">
-        <div className="flex gap-5 whitespace-nowrap border-b border-line" role="tablist">
-          {mod.tabs.map((x) => (
-            <button
-              key={x.key}
-              role="tab"
-              aria-selected={tabKey === x.key}
-              onClick={() => setTabKey(x.key)}
-              className={`-mb-px min-h-[44px] border-b-2 text-base font-medium transition-colors ${tabKey === x.key ? 'border-signal text-ink' : 'border-transparent text-ink/60 hover:text-ink'
-                }`}
-            >
-              {t(`tabs.${x.key}`)}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {current.usesBits && (
-        <div className="mb-4 flex items-center justify-end gap-2 text-sm font-medium">
-          {t('twos.bits')}
-          <div className="inline-flex overflow-hidden rounded-md border border-ink/20" role="group">
-            {[8, 16].map((b) => (
-              <button
-                key={b}
-                onClick={() => setBits(b)}
-                aria-pressed={bits === b}
-                className={`min-h-[40px] px-4 ${bits === b ? 'bg-ink text-white' : 'bg-white'}`}
-              >
-                {b}
+                {t(`tabs.${x.key}`)}
               </button>
             ))}
           </div>
         </div>
-      )}
 
-      {current.render(bits)}
+        {current.usesBits && (
+          <div className="mb-4 flex items-center justify-end gap-2 text-sm font-medium">
+            {t('twos.bits')}
+            <div className="inline-flex overflow-hidden rounded-md border border-ink/20" role="group">
+              {[8, 16].map((b) => (
+                <button
+                  key={b}
+                  onClick={() => setBits(b)}
+                  aria-pressed={bits === b}
+                  className={`min-h-[40px] px-4 ${bits === b ? 'bg-ink text-white' : 'bg-white'}`}
+                >
+                  {b}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {current.render(bits)}
+      </div>
+      <Footer modules={MODULES} currentKey={moduleKey} onSelect={selectModule} />
     </div>
   );
 }

@@ -445,5 +445,14 @@
       "badSize": "The size of array {{name}} must be a positive number.",
       "unterminated": "A {{what}} was opened but never closed."
     }
+  },
+  "footer": {
+    "about": "Learn the Bangladesh HSC ICT curriculum (Class 11–12) by seeing how it works.",
+    "chapters": "Chapters",
+    "private": "Everything runs in your browser. Your code and data stay on your device.",
+    "analytics": "Anonymous usage statistics help us improve the lessons.",
+    "feedback": "Send feedback",
+    "top": "Back to top",
+    "rights": "© {{year}} Shohoj ICT"
   }
 }
